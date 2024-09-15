@@ -70,6 +70,20 @@ Para ejecutar el proyecto, asegúrate de tener instalado Java 17 y Gradle. Puede
 ./gradlew clean build
 ./gradlew bootRun
 ```
+
+## Manejo de errores
+Se ha implementado el manejo de errores personalizado en el proyecto. Cuando no se encuentran Pokemons en la base de datos, se lanza una excepción personalizada PokemonNotFoundException. Excepción personalizada
+
+La excepción personalizada PokemonNotFoundException se define de la siguiente manera:
+
+```
+public class PokemonNotFoundException extends RuntimeException {
+    public PokemonNotFoundException(String message) {
+        super(message);
+    }
+}
+```
+
 ## Imágenes de las respuestas de Postman
 
 ![img.png](img.png)

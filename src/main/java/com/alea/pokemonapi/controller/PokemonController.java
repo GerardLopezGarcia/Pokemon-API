@@ -3,8 +3,11 @@ package com.alea.pokemonapi.controller;
 import com.alea.pokemonapi.application.PokemonService;
 import com.alea.pokemonapi.controller.documentation.PokemonApiDocs;
 import com.alea.pokemonapi.controller.dto.PokemonResponse;
+import com.alea.pokemonapi.exception.PokemonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -40,5 +43,10 @@ public class PokemonController implements PokemonApiDocs {
                 .map(pokemon -> new PokemonResponse(pokemon.getName(), pokemon.getWeight(), pokemon.getHeight(), pokemon.getBaseExperience()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(mostExperiencedPokemons);
+    }
+
+    @ExceptionHandler(PokemonNotFoundException.class)
+    public ResponseEntity<String> handlePokemonNotFoundException(PokemonNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
     }
 }
